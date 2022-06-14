@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+
+    <title>E shop</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<form th:action="@{/admin/all-categories}" th:object="${category}" method="post">
+    <input type="text" th:field="*{title}">
+    <button type="submit">add</button>
+</form>
+
+<table border="2">
+    <tr>
+        <td>
+            Title
+        </td>
+        <td>
+            Option
+        </td>
+    </tr>
+    <tr th:each="category : ${categories}">
+        <td th:text="${category.title}"> </td>
+        <td>
+            <button type="button" th:onclick="|window.location.href='/admin/all-categories/delete-${category.id}'|"> delete </button>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

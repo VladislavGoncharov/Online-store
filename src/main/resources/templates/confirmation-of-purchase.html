@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Bucket</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+
+<h3>Your order</h3>
+<table border="2" align="center">
+    <tr>
+        <td>Title</td>
+        <td>Amount</td>
+        <td>Price</td>
+        <td>Sum</td>
+        <td></td>
+    </tr>
+    <tr th:each="detail : ${bucket.bucketDetails}">
+        <td th:text="${detail.title}"></td>
+        <td th:text="${detail.amount}"></td>
+        <td th:text="${detail.price}"></td>
+        <td th:text="${detail.sum}"></td>
+        <td><a th:href="@{/bucket/{title}/remove(title=${detail.title})}">Remove</a></td>
+    </tr>
+    <tr sec:authorize="isAuthenticated()">
+        <td colspan="5">
+            <a th:href="@{/orders/new}">Buy</a>
+        </td>
+    </tr>
+    <tr sec:authorize="!isAuthenticated()">
+        <td colspan="5">
+            to purchase, you need to <a th:href="@{/login}">Login</a> or <a th:href="@{/registration}">Registration</a>
+        </td>
+    </tr>
+</table>
+<br><br>
+<div th:if="${currentAddress != null}">
+    <form th:action="@{/orders/new}" th:object="${currentAddress}" method="post">
+        <label> Использовать текущий адрес <div th:text="${currentAddress.town}"></div>
+            <input type="hidden" th:field="*{town}">
+        </label>
+        <button type="submit">Buy</button>
+    </form>
+</div>
+<form th:action="@{/orders/new}" th:object="${newAddress}" method="post">
+    <table>
+        <tr>
+            <td colspan="2"> Enter your address</td>
+        </tr>
+        <tr>
+            <td>
+                Town:
+            </td>
+            <td>
+                <input type="text" th:field="*{town}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Street/avenue:
+            </td>
+            <td>
+                <input type="text" th:field="*{street}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                House:
+            </td>
+            <td>
+                <input type="text" th:field="*{house}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Flat:
+            </td>
+            <td>
+                <input type="text" th:field="*{flat}">
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <h2>All sum -> <b th:text="${bucket.sum}"></b></h2>
+
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Buy</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

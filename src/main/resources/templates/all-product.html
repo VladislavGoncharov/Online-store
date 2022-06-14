@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<h3>Add product</h3>
+
+<div th:if="${error != null}" th:text="${error}"></div>
+
+<form th:action="@{/admin/all-product}" th:object="${newProduct}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <label>Название товара
+        <input type="text" th:field="*{title}">
+    </label>
+    <br>
+    <label>Цена
+        <input type="text" th:field="*{price}">
+    </label>
+    <br>
+    <label>Категории
+        <select th:field="*{categories}" multiple="multiple" >
+            <option th:each="category : ${allCategory}"
+                    th:value="${{category.title}}"
+                    th:text="${category.title}"
+            ></option>
+        </select>
+    </label>
+    <div th:switch="${newProduct.id == null}">
+        <div th:case="true">
+            <button type="submit">add</button>
+        </div>
+        <div th:case="false">
+            <button type="submit">change</button>
+        </div>
+    </div>
+
+</form>
+
+
+<h3>All product</h3>
+<table border="2" align="center">
+    <tr>
+        <td>Id</td>
+        <td>Title</td>
+        <td>Price</td>
+        <td>Category</td>
+        <td>Option</td>
+    </tr>
+    <tr th:each="product : ${allProduct}">
+        <td th:text="${product.id}"></td>
+        <td th:text="${product.title}"></td>
+        <td th:text="${product.price}"></td>
+        <td>
+            <table>
+                <tr th:each="category : ${product.categories}">
+                    <td th:text="${category}"></td>
+                </tr>
+            </table>
+        </td>
+        <td>
+            <button type="button" th:onclick="|window.location.href='/admin/all-product/delete-${product.id}'|"> delete </button>
+            <button type="button" th:onclick="|window.location.href='/admin/all-product/update-${product.id}'|"> update </button>
+        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

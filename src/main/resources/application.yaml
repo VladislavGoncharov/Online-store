@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: bestuser
+    hikari:
+      schema: eshop
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    default-schema: eshop
+  main:
+    allow-circular-references: true

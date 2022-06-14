@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+  <meta charset="UTF-8">
+  <title>E shop</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<table border="1" align="center">
+  <tr>
+    <td>Title    </td>
+    <td>Price    </td>
+    <td>Category    </td>
+    <td>Option    </td>
+  </tr>
+  <tr th:each="product : ${products}">
+    <td th:text="${product.title}">    </td>
+    <td th:text="${product.price}">    </td>
+    <td>
+      <table>
+        <tr th:each="category : ${product.categories}">
+          <td th:text="${category}"></td>
+        </tr>
+      </table>
+    </td>
+    <td> <a th:href="@{/products/{id}/bucket(id=${product.id})}">Add to bucket</a></td>
+  </tr>
+</table>
+
+</body>
+</html>

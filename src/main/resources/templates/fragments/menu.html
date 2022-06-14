@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>E shop</title>
+</head>
+<body>
+<div id="nav-menu" align="center">
+    <table>
+        <tr>
+            <td>Menu -></td>
+            <td><a th:href="@{/}">Home</a></td>
+            <td><a th:href="@{/products}">Products</a></td>
+            <td sec:authorize="hasAnyAuthority('ADMIN','MANAGER')"><a th:href="@{/admin}">Admin</a></td>
+            <td><a th:href="@{/bucket}">Bucket</a></td>
+            <td sec:authorize="isAuthenticated()"><a th:href="@{/orders}">Orders</a></td>
+        </tr>
+        <tr sec:authorize="isAuthenticated()">
+            <td>
+                Hello, <a th:href="@{/users/profile}">profile</a> <span sec:authentication="principal.username">Username</span>
+                <a th:href="@{/logout}">Logout</a>
+            </td>
+        </tr>
+        <tr sec:authorize="!isAuthenticated()">
+            <td>
+                Hello, Unknown. Please <a th:href="@{/login}">Login</a> or <a th:href="@{/registration}">Registration</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>

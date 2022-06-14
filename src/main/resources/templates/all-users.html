@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+
+    <title>E shop</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<a th:href="@{/users/new}">Add new</a>
+
+<table border="2">
+    <tr>
+        <td>
+            Name
+        </td>
+        <td>
+            Address
+        </td>
+        <td>
+            Phone
+        </td>
+        <td>
+            Email
+        </td>
+        <td>
+            Option
+        </td>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.username}">        </td>
+        <td th:text="${user.address}">        </td>
+        <td th:text="${user.phone}">        </td>
+        <td th:text="${user.email}">        </td>
+        <td> <a th:href="@{/admin/remove/{username}(username = ${user.username})}">Remove</a>        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>

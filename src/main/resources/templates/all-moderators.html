@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+
+    <title>E shop</title>
+</head>
+<body>
+<div th:insert="~{fragments/menu :: #nav-menu}"></div>
+
+<table border="2">
+    <tr>
+        <td>
+            Name
+        </td>
+        <td>
+            Address
+        </td>
+        <td>
+            Phone
+        </td>
+        <td>
+            Email
+        </td>
+        <td>
+            Option
+        </td>
+    </tr>
+    <tr th:each="moderator : ${moderators}">
+        <td th:text="${moderator.username}">        </td>
+        <td th:text="${moderator.address}">        </td>
+        <td th:text="${moderator.phone}">        </td>
+        <td th:text="${moderator.email}">        </td>
+        <td> <a th:href="@{/admin/remove/{moderator}(moderator = ${moderator.username})}">Remove</a>        </td>
+    </tr>
+</table>
+
+
+</body>
+</html>
