@@ -14,26 +14,22 @@ import java.util.stream.Collectors;
 public interface ProductMapper {
     ProductMapper MAPPER = Mappers.getMapper(ProductMapper.class);
 
-    default ProductDTO fromProduct(Product product){
+    default ProductDTO fromProduct(Product product) {
         return ProductDTO.builder()
                 .id(product.getId())
                 .title(product.getTitle())
                 .price(product.getPrice())
-                .categories(product.getCategories().stream()
-                        .map(Category::getTitle)
-                        .collect(Collectors.toList()))
+                .category(product.getCategory() == null ? "" : product.getCategory().getTitle())
                 .build();
     }
 
-    default List<ProductDTO> fromProductList(List<Product> productList){
+    default List<ProductDTO> fromProductList(List<Product> productList) {
         return productList.stream().map(product -> ProductDTO.builder()
-                .id(product.getId())
-                .title(product.getTitle())
-                .price(product.getPrice())
-                .categories(product.getCategories().stream()
-                        .map(Category::getTitle)
-                        .collect(Collectors.toList()))
-                .build())
+                        .id(product.getId())
+                        .title(product.getTitle())
+                        .price(product.getPrice())
+                        .category(product.getCategory() == null ? "" : product.getCategory().getTitle())
+                        .build())
                 .collect(Collectors.toList());
     }
 }

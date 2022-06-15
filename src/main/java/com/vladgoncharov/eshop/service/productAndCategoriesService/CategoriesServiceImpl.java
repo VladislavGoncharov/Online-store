@@ -51,9 +51,17 @@ public class CategoriesServiceImpl implements CategoriesService {
         Category category = categoriesRepository.getById(id);
         List<Product> productList = productRepository.findAll();
 
-        productList.forEach(product -> product.getCategories().remove(category));
+        productList = productList.stream()
+                .filter(product -> product.getCategory()==category)
+                .peek(product -> product.setCategory(null))
+                                .collect(Collectors.toList());
         productRepository.saveAll(productList);
 
         categoriesRepository.deleteById(id);
+    }
+
+    @Override
+    public void save(Category category) {
+        categoriesRepository.save(category);
     }
 }

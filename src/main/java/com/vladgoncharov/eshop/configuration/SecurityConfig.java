@@ -51,8 +51,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                    .antMatchers(
+                            "/admin/new-moderator"
+                            ,"/admin/all-moderators"
+                            ,"admin/remove/{username}").hasAuthority(Role.ADMIN.name())
                     .antMatchers("/admin/**").hasAnyAuthority(Role.ADMIN.name(), Role.MODERATOR.name())
-                    .antMatchers("/user/new-moderator").hasAuthority(Role.ADMIN.name())
                     .antMatchers("/orders/**").not().anonymous()
                     .anyRequest().permitAll()
                 .and()

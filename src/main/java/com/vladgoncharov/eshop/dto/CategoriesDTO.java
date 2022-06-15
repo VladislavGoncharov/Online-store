@@ -1,5 +1,6 @@
 package com.vladgoncharov.eshop.dto;
 
+import com.vladgoncharov.eshop.Entity.Product;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -15,4 +16,5 @@ import java.util.List;
 public class CategoriesDTO {
     private Long id;
     private String title;
+    private List<ProductDTO> products;
 }

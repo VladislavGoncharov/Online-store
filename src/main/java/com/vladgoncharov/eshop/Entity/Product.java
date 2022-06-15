@@ -3,8 +3,6 @@ package com.vladgoncharov.eshop.Entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
-import java.util.List;
 
 @Getter
 @Setter
@@ -23,13 +21,7 @@ public class Product {
     private Long id;
     private String title;
     private Long price;
-    @ManyToMany(cascade = {CascadeType.REFRESH,
-            CascadeType.PERSIST,
-            CascadeType.MERGE,
-            CascadeType.DETACH,
-    })
-    @JoinTable(name = "products_categories",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 }

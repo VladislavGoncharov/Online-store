@@ -12,4 +12,6 @@ public interface CategoriesService {
     List<CategoriesDTO> findAll();
 
     void deleteById(Long id);
+
+    void save(Category category);
 }

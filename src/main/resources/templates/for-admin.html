@@ -10,12 +10,40 @@
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
 <h3>Admin</h3>
-<a th:href="@{admin/new-moderator}">Add new moderator</a>
-<a th:href="@{admin/all-users}">View all users</a>
-<a th:href="@{admin/all-moderators}">View all moderators</a>
-<a th:href="@{admin/all-orders}">View all orders</a>
-<a th:href="@{admin/all-categories}">View all categories</a>
-<a th:href="@{admin/all-product}">View all product</a>
+<table>
+    <tr sec:authorize="hasAnyAuthority('ADMIN')">
+        <td>
+            <a th:href="@{admin/new-moderator}">Add new moderator</a>
+        </td>
+    </tr>
+    <tr sec:authorize="hasAnyAuthority('ADMIN')">
+        <td>
+            <a th:href="@{admin/all-moderators}">View all moderators</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a th:href="@{admin/all-users}">View all users</a>
+
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a th:href="@{admin/all-orders}">View all orders</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a th:href="@{admin/all-categories}">View all categories</a>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <a th:href="@{admin/all-product}">View all product</a>
+        </td>
+    </tr>
+</table>
+
 
 
 

@@ -72,7 +72,8 @@ public class AdminProductController {
     public String saveProduct(@ModelAttribute("newProduct") ProductDTO productDTO, Model model) {
 
         try{
-            productService.save(productDTO);
+            if (productDTO.getId()==null) productService.save(productDTO);
+            else productService.update(productDTO);
         }catch (RuntimeException e){
             model.addAttribute("error",e.getMessage());
             return allProduct(model);

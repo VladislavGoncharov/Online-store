@@ -3,6 +3,7 @@ package com.vladgoncharov.eshop.Entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -20,5 +21,11 @@ public class Category {
     @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME,allocationSize = 1)
     private Long id;
     private String title;
+    @OneToMany(cascade = {CascadeType.REFRESH,
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.DETACH,
+    })
+    private List<Product> product;
 
 }

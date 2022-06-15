@@ -8,7 +8,7 @@
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<h1>User profile</h1>
+<h1>User profile, обновление данных подтвердите паролем</h1>
 <form th:action="@{/users/profile}" th:object="${userDTO}" method="post">
   <table border="2">
     <tr>

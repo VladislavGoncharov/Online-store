@@ -22,7 +22,7 @@
     </label>
     <br>
     <label>Категории
-        <select th:field="*{categories}" multiple="multiple" >
+        <select th:field="*{category}" >
             <option th:each="category : ${allCategory}"
                     th:value="${{category.title}}"
                     th:text="${category.title}"
@@ -54,13 +54,7 @@
         <td th:text="${product.id}"></td>
         <td th:text="${product.title}"></td>
         <td th:text="${product.price}"></td>
-        <td>
-            <table>
-                <tr th:each="category : ${product.categories}">
-                    <td th:text="${category}"></td>
-                </tr>
-            </table>
-        </td>
+        <td th:text="${product.category}"></td>
         <td>
             <button type="button" th:onclick="|window.location.href='/admin/all-product/delete-${product.id}'|"> delete </button>
             <button type="button" th:onclick="|window.location.href='/admin/all-product/update-${product.id}'|"> update </button>

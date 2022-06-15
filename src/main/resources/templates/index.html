@@ -9,5 +9,20 @@
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
+<h3>Random product</h3>
+<table border="1" align="center">
+    <tr>
+        <td>Title    </td>
+        <td>Price    </td>
+        <td>Category    </td>
+        <td>Option    </td>
+    </tr>
+    <tr th:each="product : ${productsRandom}">
+        <td th:text="${product.title}">    </td>
+        <td th:text="${product.price}">    </td>
+        <td th:text="${product.category}">    </td>
+        <td> <a th:href="@{/products/{id}/bucket(id=${product.id})}">Add to bucket</a></td>
+    </tr>
+</table>
 </body>
 </html>

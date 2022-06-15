@@ -1,7 +1,10 @@
 package com.vladgoncharov.eshop.service.productAndCategoriesService;
 
+import com.vladgoncharov.eshop.Entity.Category;
 import com.vladgoncharov.eshop.Entity.Product;
+import com.vladgoncharov.eshop.dao.CategoriesRepository;
 import com.vladgoncharov.eshop.dao.ProductRepository;
+import com.vladgoncharov.eshop.dto.CategoriesDTO;
 import com.vladgoncharov.eshop.dto.ProductDTO;
 import com.vladgoncharov.eshop.mapper.ProductMapper;
 import com.vladgoncharov.eshop.service.userService.UserService;
@@ -23,12 +26,14 @@ public class ProductServiceImpl implements ProductService {
     private final UserService userService;
     private final BucketService bucketService;
     private final CategoriesService categoriesService;
+    private final CategoriesRepository categoriesRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, UserService userService, BucketService bucketService, CategoriesService categoriesService) {
+    public ProductServiceImpl(ProductRepository productRepository, UserService userService, BucketService bucketService, CategoriesService categoriesService, CategoriesRepository categoriesRepository) {
         this.productRepository = productRepository;
         this.userService = userService;
         this.bucketService = bucketService;
         this.categoriesService = categoriesService;
+        this.categoriesRepository = categoriesRepository;
     }
 
     @Override
@@ -66,15 +71,33 @@ public class ProductServiceImpl implements ProductService {
         if (productDTO.getId() == null &&
                 productRepository.findFirstByTitle(productDTO.getTitle()) != null)
                     throw new RuntimeException("Такой товар уже существует");
-
-        productRepository.save(Product.builder()
+        Category category = categoriesService.findFirstByTitle(productDTO.getCategory());
+        Product product = Product.builder()
                 .id(productDTO.getId())
                 .title(productDTO.getTitle())
                 .price(productDTO.getPrice())
-                .categories(productDTO.getCategories().stream()
-                        .map(categoriesService::findFirstByTitle)
-                        .collect(Collectors.toList()))
-                .build());
+                .category(category)
+                .build();
+
+        productRepository.save(product);
+
+        category.getProduct().add(product);
+
+        categoriesService.save(category);
+
+    }
+
+    @Override
+    public void update(ProductDTO productDTO) {
+        List<Category> categories = categoriesRepository.findAll();
+        Product oldProduct = productRepository.findFirstById(productDTO.getId());
+        categories = categories.stream()
+                .peek(category -> category.getProduct().remove(oldProduct))
+                .collect(Collectors.toList());
+        categoriesRepository.saveAll(categories);
+
+        save(productDTO);
+
     }
 
 }

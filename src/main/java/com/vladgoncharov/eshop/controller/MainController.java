@@ -3,8 +3,11 @@ package com.vladgoncharov.eshop.controller;
 import com.vladgoncharov.eshop.Entity.Role;
 import com.vladgoncharov.eshop.dto.BucketDTO;
 import com.vladgoncharov.eshop.dto.BucketDetailDTO;
+import com.vladgoncharov.eshop.dto.ProductDTO;
 import com.vladgoncharov.eshop.dto.UserDTO;
+import com.vladgoncharov.eshop.mapper.ProductMapper;
 import com.vladgoncharov.eshop.service.bucketAndOrdersService.BucketService;
+import com.vladgoncharov.eshop.service.productAndCategoriesService.ProductService;
 import com.vladgoncharov.eshop.service.userService.UserService;
 import com.vladgoncharov.eshop.utils.Utils;
 import org.springframework.stereotype.Controller;
@@ -16,23 +19,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.Collections;
-import java.util.Objects;
+import java.util.*;
 
 
 @Controller
 public class MainController {
 
+    ProductMapper mapper = ProductMapper.MAPPER;
+
     private final UserService userService;
     private final BucketService bucketService;
+    private final ProductService productService;
 
-    public MainController(UserService userService, BucketService bucketService) {
+    public MainController(UserService userService, BucketService bucketService, ProductService productService) {
         this.userService = userService;
         this.bucketService = bucketService;
+        this.productService = productService;
     }
 
     @RequestMapping("/")
     public String index(Model model, HttpServletRequest request) {
+
+        List<ProductDTO> productDTOS = productService.findAll();
+        List<ProductDTO> productRandom = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            productRandom.add(productDTOS.get(new Random().nextInt(productDTOS.size())));
+        }
+        model.addAttribute("productsRandom", productRandom);
         model.addAttribute("anonymousBucket", Utils.getBucketInSession(request));
         return "index";
     }
@@ -47,7 +60,7 @@ public class MainController {
                     bucketService.addProductInBucket(principal.getName(), Collections.singletonList(product.getProductId()));
                 }
         }
-        return "index";
+        return "redirect:/";
     }
 
     @RequestMapping("/login")
