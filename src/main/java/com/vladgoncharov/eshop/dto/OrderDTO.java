@@ -1,25 +1,17 @@
 package com.vladgoncharov.eshop.dto;
 
 import com.vladgoncharov.eshop.Entity.OrderStatus;
-import com.vladgoncharov.eshop.Entity.User;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-
 public class OrderDTO {
 
     private Long id;

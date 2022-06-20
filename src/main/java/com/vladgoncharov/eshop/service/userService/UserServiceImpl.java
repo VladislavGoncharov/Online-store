@@ -2,9 +2,7 @@ package com.vladgoncharov.eshop.service.userService;
 
 import com.vladgoncharov.eshop.Entity.Role;
 import com.vladgoncharov.eshop.Entity.User;
-import com.vladgoncharov.eshop.dao.UserRepository;
 import com.vladgoncharov.eshop.dto.UserDTO;
-import com.vladgoncharov.eshop.service.userService.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,19 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
-
 
 @Service
 @Transactional
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserRepository {
 
-    private final UserRepository userRepository;
+    private final com.vladgoncharov.eshop.dao.UserRepository userRepository;
 
     private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(com.vladgoncharov.eshop.dao.UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -36,7 +32,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findFirstByUsername(username);
         if (user == null)
-            throw new UsernameNotFoundException("User not found with name: " + username);
+            throw new UsernameNotFoundException("Такой пользователь не найден: " + username);
 
         List<GrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority(user.getRole().name()));
@@ -54,7 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(UserDTO userDTO,Role role) {
+    public void save(UserDTO userDTO, Role role) {
         User user = User.builder()
                 .username(userDTO.getUsername())
                 .password(passwordEncoder.encode(userDTO.getPassword()))
@@ -91,26 +87,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateProfile(UserDTO userDTO) {
         User saveUser = userRepository.findFirstByUsername(userDTO.getUsername());
-        if(saveUser == null) {
-            throw new RuntimeException("User not found by name " + userDTO.getUsername());
-        }
 
-        boolean isChanged = false;
-        if (userDTO.getPassword() != null && !userDTO.getPassword().isEmpty()) {
-            saveUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
-            isChanged = true;
-        }
+        saveUser.setEmail(userDTO.getEmail());
+        saveUser.setAddress(userDTO.getAddress());
+        saveUser.setPhone(userDTO.getPhone());
+        userRepository.save(saveUser);
 
-        if (!Objects.equals(userDTO.getEmail(),saveUser.getEmail())){
-            saveUser.setEmail(userDTO.getEmail());
-            isChanged = true;
-        }
-
-        if (isChanged){
-            saveUser.setAddress(userDTO.getAddress());
-            saveUser.setPhone(userDTO.getPhone());
-            userRepository.save(saveUser);
-        }
     }
 
     @Override

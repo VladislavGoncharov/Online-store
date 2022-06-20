@@ -1,7 +1,7 @@
 package com.vladgoncharov.eshop.configuration;
 
 import com.vladgoncharov.eshop.Entity.Role;
-import com.vladgoncharov.eshop.service.userService.UserService;
+import com.vladgoncharov.eshop.service.userService.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,10 +23,10 @@ import javax.persistence.Basic;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserService userService;
+    private UserRepository userService;
 
     @Autowired
-    public void setUserService(UserService userService) {
+    public void setUserService(UserRepository userService) {
         this.userService = userService;
     }
 
@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .formLogin()
                     .loginPage("/login")
                     .loginProcessingUrl("/auth")
-                    .defaultSuccessUrl("/transferOfBasket")
+                    .defaultSuccessUrl("/transferOfBasket") // перемещение корзины анонима в корзину пользователя
                     .failureUrl("/login-error")
                     .permitAll()
                 .and()

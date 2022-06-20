@@ -1,18 +1,16 @@
 package com.vladgoncharov.eshop.controller;
 
+import com.vladgoncharov.eshop.Entity.OrderStatus;
 import com.vladgoncharov.eshop.Entity.User;
 import com.vladgoncharov.eshop.dto.AddressForOrder;
 import com.vladgoncharov.eshop.dto.BucketDTO;
 import com.vladgoncharov.eshop.dto.OrderDTO;
 import com.vladgoncharov.eshop.service.bucketAndOrdersService.BucketService;
 import com.vladgoncharov.eshop.service.bucketAndOrdersService.OrderService;
-import com.vladgoncharov.eshop.service.userService.UserService;
+import com.vladgoncharov.eshop.service.userService.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -23,32 +21,32 @@ public class OrderController {
 
     private final OrderService orderService;
     private final BucketService bucketService;
-    private final UserService userService;
+    private final UserRepository userService;
 
-    public OrderController(OrderService orderService, BucketService bucketService, UserService userService) {
+    public OrderController(OrderService orderService, BucketService bucketService, UserRepository userService) {
         this.orderService = orderService;
         this.bucketService = bucketService;
         this.userService = userService;
     }
 
     @RequestMapping
-    public String ordersOfAnAuthorizedUser(Principal principal, Model model){
+    public String ordersOfAnAuthorizedUser(Principal principal, Model model) {
 
         List<OrderDTO> orders = orderService.findOrdersByUser(principal.getName());
-        model.addAttribute("orders",orders);
+        model.addAttribute("orders", orders);
 
         return "orders";
     }
 
     @GetMapping("/new")
-    public String confirmationOfPurchase(Principal principal, Model model){
+    public String confirmationOfPurchase(Principal principal, Model model) {
         BucketDTO bucketDTO = bucketService.getBucketByUser(principal.getName());
         User user = userService.findFirstByUsername(principal.getName());
 
         if (!user.getAddress().isEmpty()) {
-            model.addAttribute("currentAddress", new AddressForOrder(user.getAddress(),"","",""));
+            model.addAttribute("currentAddress"
+                    , new AddressForOrder(user.getAddress(), "", "", ""));
         }
-
 
         model.addAttribute("bucket", bucketDTO);
         model.addAttribute("newAddress", new AddressForOrder());
@@ -57,19 +55,24 @@ public class OrderController {
     }
 
     @PostMapping("/new")
-    public String newOrder(@ModelAttribute("address")AddressForOrder address, Principal principal, Model model){
+    public String newOrder(@ModelAttribute("address") AddressForOrder address, Principal principal, Model model) {
         User user = userService.findFirstByUsername(principal.getName());
+
         if (user.getAddress().isEmpty()) {
             user.setAddress(address.fullAddress());
             userService.save(user);
         }
 
+        orderService.save(principal.getName(), address.fullAddress());
+        bucketService.deleteAllProductUser(principal.getName());
 
-        orderService.save(principal.getName(),address.fullAddress());
-        bucketService.deleteProductUser(principal.getName());
+        model.addAttribute("orders", orderService.findOrdersByUser(principal.getName()));
+        return "redirect:/orders";
+    }
 
-        List<OrderDTO> orders = orderService.findOrdersByUser(principal.getName());
-        model.addAttribute("orders",orders);
+    @GetMapping("/cancel-status/{id}")
+    public String changeStatus(@PathVariable("id") Long id) {
+        orderService.setStatusOrder(id, OrderStatus.ОТМЕНЕН);
         return "redirect:/orders";
     }
 }

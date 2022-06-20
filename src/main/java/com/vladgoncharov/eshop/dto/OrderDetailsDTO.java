@@ -16,9 +16,4 @@ public class OrderDetailsDTO {
     private Long amount;
     private Long price;
 
-    public OrderDetailsDTO(OrderDetails orderDetails) {
-        this.product = orderDetails.getProduct();
-        this.amount = orderDetails.getAmount();
-        this.price = orderDetails.getPrice();
-    }
 }

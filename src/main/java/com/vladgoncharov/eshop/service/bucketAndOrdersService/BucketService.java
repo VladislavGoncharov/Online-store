@@ -7,10 +7,12 @@ import java.util.List;
 
 public interface BucketService {
 
-    void addProductInBucket(String username, List<Long> productIds);
+    void addProductInBucket(String username, Long productId);
+
     void deleteProductInBucket(String username, String title, HttpServletRequest request);
 
-    void deleteProductUser(String name);
+    void deleteAllProductUser(String name);
+
     BucketDTO getBucketByUser(String name);
 
     BucketDTO getBucketByAnonymous(HttpServletRequest request);

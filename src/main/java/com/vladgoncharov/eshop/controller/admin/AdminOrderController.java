@@ -27,8 +27,11 @@ public class AdminOrderController {
     }
 
     @PostMapping("/all-orders/change-status/{id}")
-    public String changeStatus(@PathVariable("id") Long id , @ModelAttribute("statusDTO") OrderStatusDTO statusDTO, Model model) {
+    public String changeStatus(@PathVariable("id") Long id
+            , @ModelAttribute("statusDTO") OrderStatusDTO statusDTO) {
+
         orderService.setStatusOrder(id,statusDTO.getStatus());
+
         return "redirect:/admin/all-orders";
     }
 

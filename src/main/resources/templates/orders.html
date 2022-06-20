@@ -3,23 +3,24 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
   <meta charset="UTF-8">
-  <title>Orders</title>
+  <title>Заказы</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<h3>Your orders</h3>
+<h3>Ваши заказы</h3>
 <div th:switch="${orders.isEmpty()}">
   <div th:case="false">
     <table border="2" align="center">
       <tr>
-        <td>Username</td>
-        <td>Date created</td>
-        <td>Address</td>
-        <td>Details</td>
-        <td>Sum</td>
-        <td>Status</td>
-        <td>Update</td>
+        <td>Логин</td>
+        <td>Дата создания</td>
+        <td>Адрес</td>
+        <td>Детали товаров</td>
+        <td>Сумма</td>
+        <td>Статус</td>
+        <td>Дата последнего изменения</td>
+        <td>Действие</td>
       </tr>
 
       <tr th:each="order : ${orders}">
@@ -29,9 +30,9 @@
         <td>
           <table>
             <tr>
-              <td>Title</td>
-              <td>Price</td>
-              <td>Amount</td>
+              <td>Товар</td>
+              <td>Цена</td>
+              <td>Количество</td>
             </tr>
             <tr th:each="product : ${order.details}">
               <td th:text="${product.product.getTitle()}"></td>
@@ -43,23 +44,26 @@
         <td th:text="${order.sum}"></td>
         <td th:text="${order.status}"></td>
         <td th:text="${order.getFormatDate(order.updated)}"></td>
+        <td>
+          <a th:href="@{/orders/cancel-status/{id}(id=${order.id})}">Отменить заказ</a>
+        </td>
       </tr>
     </table>
   </div>
   <div th:case="true">
     <table border="2" align="center">
       <tr>
-        <td>Username</td>
-        <td>Date created</td>
-        <td>Address</td>
-        <td>Details</td>
-        <td>Sum</td>
-        <td>Status</td>
-        <td>Update</td>
+        <td>Логин</td>
+        <td>Дата создания</td>
+        <td>Адрес</td>
+        <td>Детали товаров</td>
+        <td>Сумма</td>
+        <td>Статус</td>
+        <td>Дата последнего изменения</td>
       </tr>
       <tr>
         <td colspan="7">
-          You haven't ordered anything yet, go to <a th:href="@{/products}">products</a>
+          <h3>У вас нет заказов, бегом заказывать <a th:href="@{/products}">товары</a> </h3>
         </td>
       </tr>
     </table>

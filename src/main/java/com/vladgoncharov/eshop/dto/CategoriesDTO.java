@@ -1,11 +1,7 @@
 package com.vladgoncharov.eshop.dto;
 
-import com.vladgoncharov.eshop.Entity.Product;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Getter

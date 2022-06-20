@@ -1,5 +1,4 @@
-set
-search_path to eshop;
+set search_path to eshop;
 
 drop sequence if exists bucket_seq cascade;
 drop sequence if exists categories_seq cascade;

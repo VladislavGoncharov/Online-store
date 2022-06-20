@@ -3,7 +3,6 @@ package com.vladgoncharov.eshop.dto;
 import com.vladgoncharov.eshop.Entity.Product;
 import lombok.*;
 
-
 @Getter
 @Setter
 @NoArgsConstructor

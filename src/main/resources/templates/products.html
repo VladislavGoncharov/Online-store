@@ -3,23 +3,23 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
   <meta charset="UTF-8">
-  <title>E shop</title>
+  <title>Товары</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
 <table border="1" align="center">
   <tr>
-    <td>Title    </td>
-    <td>Price    </td>
-    <td>Category    </td>
-    <td>Option    </td>
+    <td>Название    </td>
+    <td>Цена    </td>
+    <td>Категория    </td>
+    <td>Действие    </td>
   </tr>
   <tr th:each="product : ${products}">
     <td th:text="${product.title}">    </td>
     <td th:text="${product.price}">    </td>
     <td th:text="${product.category}">    </td>
-    <td> <a th:href="@{/products/{id}/bucket(id=${product.id})}">Add to bucket</a></td>
+    <td> <a th:href="@{/products/{id}/bucket(id=${product.id})}">Добавить в корзину</a></td>
   </tr>
 </table>
 

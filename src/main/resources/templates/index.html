@@ -5,23 +5,23 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>E shop</title>
+    <title>Главная</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
-<h3>Random product</h3>
+<h3>Случайные товары</h3>
 <table border="1" align="center">
     <tr>
-        <td>Title    </td>
-        <td>Price    </td>
-        <td>Category    </td>
-        <td>Option    </td>
+        <td>Название    </td>
+        <td>Цена    </td>
+        <td>Категория    </td>
+        <td>Действие    </td>
     </tr>
     <tr th:each="product : ${productsRandom}">
         <td th:text="${product.title}">    </td>
         <td th:text="${product.price}">    </td>
         <td th:text="${product.category}">    </td>
-        <td> <a th:href="@{/products/{id}/bucket(id=${product.id})}">Add to bucket</a></td>
+        <td> <a th:href="@{/products/{id}/bucket(id=${product.id})}">Добавить в корзину</a></td>
     </tr>
 </table>
 </body>

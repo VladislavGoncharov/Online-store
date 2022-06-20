@@ -3,28 +3,28 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title>E shop</title>
+    <title>Меню</title>
 </head>
 <body>
 <div id="nav-menu" align="center">
     <table>
         <tr>
-            <td>Menu -></td>
-            <td><a th:href="@{/}">Home</a></td>
-            <td><a th:href="@{/products}">Products</a></td>
-            <td sec:authorize="hasAnyAuthority('ADMIN','MODERATOR')"><a th:href="@{/admin}">Admin</a></td>
-            <td><a th:href="@{/bucket}">Bucket</a></td>
-            <td sec:authorize="isAuthenticated()"><a th:href="@{/orders}">Orders</a></td>
+            <td>Меню -></td>
+            <td><a th:href="@{/}">Главная</a></td>
+            <td><a th:href="@{/products}">Товары</a></td>
+            <td sec:authorize="hasAnyAuthority('ADMIN','MODERATOR')"><a th:href="@{/admin}">Админ</a></td>
+            <td><a th:href="@{/bucket}">Корзина</a></td>
+            <td sec:authorize="isAuthenticated()"><a th:href="@{/orders}">Заказы</a></td>
         </tr>
         <tr sec:authorize="isAuthenticated()">
             <td>
-                Hello, <a th:href="@{/users/profile}">profile</a> <span sec:authentication="principal.username">Username</span>
-                <a th:href="@{/logout}">Logout</a>
+                Привет, <a th:href="@{/users/profile}">профиль</a> <span sec:authentication="principal.username">Логин</span>
+                <a th:href="@{/logout}">Выйти</a>
             </td>
         </tr>
         <tr sec:authorize="!isAuthenticated()">
             <td>
-                Hello, Unknown. Please <a th:href="@{/login}">Login</a> or <a th:href="@{/registration}">Registration</a>
+                Здравствуй, гость. <a th:href="@{/login}">Войти</a> или <a th:href="@{/registration}">Регистрация</a>
             </td>
         </tr>
     </table>

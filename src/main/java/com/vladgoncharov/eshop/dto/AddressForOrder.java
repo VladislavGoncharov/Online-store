@@ -1,6 +1,5 @@
 package com.vladgoncharov.eshop.dto;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,16 +14,16 @@ public class AddressForOrder {
     String flat = "";
 
     public String fullAddress() {
-        if (town.length()>0 && street.isEmpty() && house.isEmpty() && flat.isEmpty())
+        if (town.length() > 0 && street.isEmpty() && house.isEmpty() && flat.isEmpty())
             return town;
         return "г." + uppercaseForFirstCharacter(town) +
                 " ул." + uppercaseForFirstCharacter(street) +
                 " " + house +
-                " кв. "+ flat;
+                " кв. " + flat;
     }
 
-    private String uppercaseForFirstCharacter(String word){
+    private String uppercaseForFirstCharacter(String word) {
         if (word.isEmpty()) return "";
-        return word.substring(0,1).toUpperCase() + word.substring(1);
+        return word.substring(0, 1).toUpperCase() + word.substring(1);
     }
 }

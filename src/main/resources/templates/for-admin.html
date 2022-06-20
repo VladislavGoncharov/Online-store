@@ -4,49 +4,44 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>E shop</title>
+    <title>Админка</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<h3>Admin</h3>
+<h3>Админка</h3>
 <table>
     <tr sec:authorize="hasAnyAuthority('ADMIN')">
         <td>
-            <a th:href="@{admin/new-moderator}">Add new moderator</a>
+            <a th:href="@{admin/new-moderator}">Добавить нового модератора</a>
         </td>
     </tr>
     <tr sec:authorize="hasAnyAuthority('ADMIN')">
         <td>
-            <a th:href="@{admin/all-moderators}">View all moderators</a>
+            <a th:href="@{admin/all-moderators}">Посмотреть всех модераторов</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a th:href="@{admin/all-users}">View all users</a>
-
+            <a th:href="@{admin/all-users}">Посмотреть всех пользователей</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a th:href="@{admin/all-orders}">View all orders</a>
+            <a th:href="@{admin/all-orders}">Посмотреть все заказы</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a th:href="@{admin/all-categories}">View all categories</a>
+            <a th:href="@{admin/all-categories}">Посмотреть все категории</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a th:href="@{admin/all-product}">View all product</a>
+            <a th:href="@{admin/all-product}">Посмотреть все товары</a>
         </td>
     </tr>
 </table>
-
-
-
-
 
 </body>
 </html>

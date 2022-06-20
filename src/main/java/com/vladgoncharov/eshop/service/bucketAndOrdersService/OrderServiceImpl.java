@@ -7,7 +7,7 @@ import com.vladgoncharov.eshop.dto.BucketDetailDTO;
 import com.vladgoncharov.eshop.dto.OrderDTO;
 import com.vladgoncharov.eshop.mapper.OrderMapper;
 import com.vladgoncharov.eshop.service.productAndCategoriesService.ProductService;
-import com.vladgoncharov.eshop.service.userService.UserService;
+import com.vladgoncharov.eshop.service.userService.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,19 +22,19 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final BucketService bucketService;
-    private final UserService userService;
-    private final ProductService productService;
+    private final UserRepository userRepository;
+    private final ProductService productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, BucketService bucketService, UserService userService, ProductService productService) {
+    public OrderServiceImpl(OrderRepository orderRepository, BucketService bucketService, UserRepository userService, ProductService productService) {
         this.orderRepository = orderRepository;
         this.bucketService = bucketService;
-        this.userService = userService;
-        this.productService = productService;
+        this.userRepository = userService;
+        this.productRepository = productService;
     }
 
     @Override
     public List<OrderDTO> findOrdersByUser(String username) {
-        User user = userService.findFirstByUsername(username);
+        User user = userRepository.findFirstByUsername(username);
         try {
             List<Order> orders = orderRepository.findAllByUser(user.getBucket().getUser());
             List<OrderDTO> orderDTOS = orderMapper.fromOrderList(orders);
@@ -51,17 +51,17 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void save(String username,String address) {
+    public void save(String username, String address) {
 
         BucketDTO bucket = bucketService.getBucketByUser(username);
         Order order = new Order();
         List<OrderDetails> orderDetails = toOrderDetails(bucket.getBucketDetails(), order);
 
-        order.setUser(userService.findFirstByUsername(username));
+        order.setUser(userRepository.findFirstByUsername(username));
         order.setAddress(address);
         order.setDetails(orderDetails);
         order.setSum(bucket.getSum());
-        order.setStatus(OrderStatus.NEW);
+        order.setStatus(OrderStatus.СОЗДАН);
 
         orderRepository.save(order);
     }
@@ -90,7 +90,7 @@ public class OrderServiceImpl implements OrderService {
             OrderDetails orderDetails = OrderDetails.builder()
                     .order(order)
                     .price(bucketDetailDTO.getPrice())
-                    .product(productService.findFirstById(bucketDetailDTO.getProductId()))
+                    .product(productRepository.getById(bucketDetailDTO.getProductId()))
                     .amount(bucketDetailDTO.getAmount())
                     .build();
 

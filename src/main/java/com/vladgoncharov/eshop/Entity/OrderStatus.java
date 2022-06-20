@@ -1,5 +1,5 @@
 package com.vladgoncharov.eshop.Entity;
 
 public enum OrderStatus {
-    NEW, CANSEL, PAID, CLOSED, RETURNED
+    СОЗДАН, ПОДТВЕРЖДЕН, ОПЛАЧЕН, ОТМЕНЕН, ЗАКРЫТ, ВОЗВРАЩЕН
 }

@@ -8,14 +8,12 @@ import com.vladgoncharov.eshop.dao.ProductRepository;
 import com.vladgoncharov.eshop.dao.UserRepository;
 import com.vladgoncharov.eshop.dto.BucketDTO;
 import com.vladgoncharov.eshop.dto.BucketDetailDTO;
+import com.vladgoncharov.eshop.utils.BucketUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +32,7 @@ public class BucketServiceImpl implements BucketService {
 
     @Override
     public void deleteProductInBucket(String username, String title, HttpServletRequest request) {
-        if (username == null) {
+        if (username == null) { // удаление товара из корзины анонимного пользователя
             BucketDTO bucketDTO = (BucketDTO) request.getSession().getAttribute("anonymousBucket");
 
             BucketDetailDTO product = bucketDTO.getBucketDetails().stream()
@@ -42,9 +40,9 @@ public class BucketServiceImpl implements BucketService {
                     .findFirst()
                     .get();
 
-            if (product.getAmount()>1) product.setAmount(product.getAmount()-1L);
+            if (product.getAmount() > 1) product.setAmount(product.getAmount() - 1L);
             else bucketDTO.getBucketDetails().remove(product);
-        } else {
+        } else {   // удаление товара из корзины зарегистрированного пользователя
             User user = userRepository.findFirstByUsername(username);
             user.getBucket().getProducts().remove(productRepository.findFirstByTitle(title));
             userRepository.save(user);
@@ -52,7 +50,7 @@ public class BucketServiceImpl implements BucketService {
     }
 
     @Override
-    public void deleteProductUser(String name) {
+    public void deleteAllProductUser(String name) {
         User user = userRepository.findFirstByUsername(name);
         Bucket bucket = user.getBucket();
         bucket.getProducts().removeAll(bucket.getProducts());
@@ -60,33 +58,25 @@ public class BucketServiceImpl implements BucketService {
         userRepository.save(user);
     }
 
-    private List<Product> getCollectReferenceProductsById(List<Long> productId) {
-        return productId.stream()
-                .map(productRepository::getOne)
-                .collect(Collectors.toList());
-    }
-
     @Override
-    public void addProductInBucket(String username, List<Long> productId) {
+    public void addProductInBucket(String username, Long productId) {
         Bucket bucket = userRepository.findFirstByUsername(username).getBucket();
-        if (bucket == null){
+        if (bucket == null) {
             User user = userRepository.findFirstByUsername(username);
 
             bucket = new Bucket();
             bucket.setUser(user);
             user.setBucket(bucket);
 
-            List<Product> productList = getCollectReferenceProductsById(productId);
+            List<Product> productList = Collections.singletonList(productRepository.getById(productId));
             bucket.setProducts(productList);
 
             userRepository.save(user);
             bucketRepository.save(bucket);
-        }
-        else{
+        } else {
             List<Product> products = new ArrayList<>(bucket.getProducts());
-            products.addAll(getCollectReferenceProductsById(productId));
+            products.add(productRepository.getById(productId));
             bucket.setProducts(products);
-
             bucketRepository.save(bucket);
         }
 
@@ -100,21 +90,18 @@ public class BucketServiceImpl implements BucketService {
             return new BucketDTO();
         }
 
-        BucketDTO bucketDTO = new BucketDTO();
-
         Map<Long, BucketDetailDTO> mapByProductId = new HashMap<>();
-
         for (Product product : user.getBucket().getProducts()) {
-
-            if (!mapByProductId.containsKey(product.getId())) {
+            if (!mapByProductId.containsKey(product.getId())) { // добавить продукт если его нет
                 mapByProductId.put(product.getId(), new BucketDetailDTO(product));
-            } else {
+            } else {  // если есть, изменить их количество и общую сумму
                 BucketDetailDTO bucketDetail = mapByProductId.get(product.getId());
                 bucketDetail.setAmount(bucketDetail.getAmount() + 1L);
                 bucketDetail.setSum(bucketDetail.getSum() + product.getPrice());
             }
         }
 
+        BucketDTO bucketDTO = new BucketDTO();
         bucketDTO.setBucketDetails(new ArrayList<>(mapByProductId.values()));
         bucketDTO.aggregate();
 
@@ -124,6 +111,10 @@ public class BucketServiceImpl implements BucketService {
     @Override
     public BucketDTO getBucketByAnonymous(HttpServletRequest request) {
         BucketDTO bucketDTO = (BucketDTO) request.getSession().getAttribute("anonymousBucket");
+
+        if (bucketDTO == null) {
+            return BucketUtil.getBucketInSession(request);
+        }
 
         Map<Long, BucketDetailDTO> mapByProductId = new HashMap<>();
         for (BucketDetailDTO product : bucketDTO.getBucketDetails()) {

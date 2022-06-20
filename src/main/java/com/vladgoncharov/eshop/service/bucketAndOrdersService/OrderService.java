@@ -8,10 +8,15 @@ import java.util.List;
 
 public interface OrderService {
     List<OrderDTO> findOrdersByUser(String username);
+
     List<OrderDTO> getAll();
-    void save(String username,String address);
+
+    void save(String username, String address);
+
     void save(Order order);
+
     Order findOrder(Long id);
+
     void setStatusOrder(Long id, OrderStatus status);
 
 

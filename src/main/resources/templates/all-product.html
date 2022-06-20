@@ -3,11 +3,11 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title>Orders</title>
+    <title>Все товары</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
-<h3>Add product</h3>
+<h3>Добавить товар</h3>
 
 <div th:if="${error != null}" th:text="${error}"></div>
 
@@ -31,24 +31,24 @@
     </label>
     <div th:switch="${newProduct.id == null}">
         <div th:case="true">
-            <button type="submit">add</button>
+            <button type="submit">Добавить</button>
         </div>
         <div th:case="false">
-            <button type="submit">change</button>
+            <button type="submit">Изменить</button>
         </div>
     </div>
 
 </form>
 
 
-<h3>All product</h3>
+<h3>Все товары</h3>
 <table border="2" align="center">
     <tr>
-        <td>Id</td>
-        <td>Title</td>
-        <td>Price</td>
-        <td>Category</td>
-        <td>Option</td>
+        <td>ID</td>
+        <td>Название</td>
+        <td>Цена</td>
+        <td>Категория</td>
+        <td>Действие</td>
     </tr>
     <tr th:each="product : ${allProduct}">
         <td th:text="${product.id}"></td>
@@ -56,8 +56,8 @@
         <td th:text="${product.price}"></td>
         <td th:text="${product.category}"></td>
         <td>
-            <button type="button" th:onclick="|window.location.href='/admin/all-product/delete-${product.id}'|"> delete </button>
-            <button type="button" th:onclick="|window.location.href='/admin/all-product/update-${product.id}'|"> update </button>
+            <button type="button" th:onclick="|window.location.href='/admin/all-product/delete-${product.id}'|"> Удалить </button>
+            <button type="button" th:onclick="|window.location.href='/admin/all-product/update-${product.id}'|"> Изменить </button>
         </td>
     </tr>
 </table>

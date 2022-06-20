@@ -52,9 +52,9 @@ public class CategoriesServiceImpl implements CategoriesService {
         List<Product> productList = productRepository.findAll();
 
         productList = productList.stream()
-                .filter(product -> product.getCategory()==category)
+                .filter(product -> product.getCategory() == category)
                 .peek(product -> product.setCategory(null))
-                                .collect(Collectors.toList());
+                .collect(Collectors.toList());
         productRepository.saveAll(productList);
 
         categoriesRepository.deleteById(id);

@@ -1,21 +1,21 @@
 INSERT INTO categories (id, title)
-VALUES (1, 'Alcohol'),
-       (2, 'Dairy products'),
-       (3, 'Bakery products'),
-       (4, 'Vegetables');
+VALUES (1, 'Алкоголь'),
+       (2, 'Молочная продукция'),
+       (3, 'Хлебобулочные изделия'),
+       (4, 'Овощи');
 
 ALTER SEQUENCE categories_seq RESTART WITH 5;
 
 INSERT INTO product (id, price, title, category_id)
-VALUES (1, 450, 'Cheese', 2),
-       (2, 45, 'Milk', 2),
-       (3, 65, 'Oil', 2),
-       (4, 115, 'Bread', 3),
-       (5, 115, 'Bun', 3),
-       (6, 115, 'Loaf', 3),
-       (7, 115, 'Vodka', 1),
-       (8, 115, 'Tomato', 4),
-       (9, 58, 'Сucumber', 4);
+VALUES (1, 250, 'Сыр', 2),
+       (2, 65, 'Молоко', 2),
+       (3, 105, 'Масло', 2),
+       (4, 35, 'Хлеб', 3),
+       (5, 25, 'Булочка', 3),
+       (6, 30, 'Батон', 3),
+       (7, 160, 'Водка', 1),
+       (8, 110, 'Помидор', 4),
+       (9, 90, 'Огурец', 4);
 
 ALTER SEQUENCE product_seq RESTART WITH 10;
 

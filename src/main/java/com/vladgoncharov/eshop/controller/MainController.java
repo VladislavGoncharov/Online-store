@@ -5,11 +5,10 @@ import com.vladgoncharov.eshop.dto.BucketDTO;
 import com.vladgoncharov.eshop.dto.BucketDetailDTO;
 import com.vladgoncharov.eshop.dto.ProductDTO;
 import com.vladgoncharov.eshop.dto.UserDTO;
-import com.vladgoncharov.eshop.mapper.ProductMapper;
 import com.vladgoncharov.eshop.service.bucketAndOrdersService.BucketService;
 import com.vladgoncharov.eshop.service.productAndCategoriesService.ProductService;
-import com.vladgoncharov.eshop.service.userService.UserService;
-import com.vladgoncharov.eshop.utils.Utils;
+import com.vladgoncharov.eshop.service.userService.UserRepository;
+import com.vladgoncharov.eshop.utils.BucketUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,17 +20,14 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.*;
 
-
 @Controller
 public class MainController {
 
-    ProductMapper mapper = ProductMapper.MAPPER;
-
-    private final UserService userService;
+    private final UserRepository userService;
     private final BucketService bucketService;
     private final ProductService productService;
 
-    public MainController(UserService userService, BucketService bucketService, ProductService productService) {
+    public MainController(UserRepository userService, BucketService bucketService, ProductService productService) {
         this.userService = userService;
         this.bucketService = bucketService;
         this.productService = productService;
@@ -46,10 +42,11 @@ public class MainController {
             productRandom.add(productDTOS.get(new Random().nextInt(productDTOS.size())));
         }
         model.addAttribute("productsRandom", productRandom);
-        model.addAttribute("anonymousBucket", Utils.getBucketInSession(request));
+        model.addAttribute("anonymousBucket", BucketUtil.getBucketInSession(request));
         return "index";
     }
 
+    // Добавление товаров в корзину пользователя из анонимной корзины
     @RequestMapping("/transferOfBasket")
     public String transferOfBasketAfterSuccessfulRegistration(HttpServletRequest request, Principal principal) {
         BucketDTO bucketDTO = (BucketDTO) request.getSession().getAttribute("anonymousBucket");
@@ -57,7 +54,7 @@ public class MainController {
         if (bucketDTO.getBucketDetails() != null) {
             for (BucketDetailDTO product : bucketDTO.getBucketDetails())
                 for (int i = 0; i < product.getAmount(); i++) {
-                    bucketService.addProductInBucket(principal.getName(), Collections.singletonList(product.getProductId()));
+                    bucketService.addProductInBucket(principal.getName(),product.getProductId());
                 }
         }
         return "redirect:/";

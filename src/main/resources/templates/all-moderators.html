@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
 
-    <title>E shop</title>
+    <title>Все модераторы</title>
 </head>
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
@@ -12,19 +12,19 @@
 <table border="2">
     <tr>
         <td>
-            Name
+            Логин
         </td>
         <td>
-            Address
+            Адрес
         </td>
         <td>
-            Phone
+            Телефон
         </td>
         <td>
-            Email
+            Почта
         </td>
         <td>
-            Option
+            Действия
         </td>
     </tr>
     <tr th:each="moderator : ${moderators}">
@@ -32,7 +32,7 @@
         <td th:text="${moderator.address}">        </td>
         <td th:text="${moderator.phone}">        </td>
         <td th:text="${moderator.email}">        </td>
-        <td> <a th:href="@{/admin/remove/{moderator}(moderator = ${moderator.username})}">Remove</a>        </td>
+        <td> <a th:href="@{/admin/remove/{moderator}(moderator = ${moderator.username})}">Удалить</a>        </td>
     </tr>
 </table>
 

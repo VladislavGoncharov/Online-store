@@ -2,7 +2,6 @@ package com.vladgoncharov.eshop.dto;
 
 import lombok.*;
 
-
 @Getter
 @Setter
 @NoArgsConstructor

@@ -7,12 +7,14 @@ import java.util.List;
 
 public interface ProductService {
     List<ProductDTO> findAll();
+
     void addToUserBucket(Long productId, String username);
-    Product findFirstByTitle(String title);
-    Product findFirstById(Long id);
+
+    Product getById(Long id);
 
     void deleteById(Long id);
 
     void save(ProductDTO productDTO);
+
     void update(ProductDTO productDTO);
 }

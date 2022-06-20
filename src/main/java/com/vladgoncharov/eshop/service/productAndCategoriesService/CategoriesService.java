@@ -8,7 +8,9 @@ import java.util.List;
 public interface CategoriesService {
 
     void save(CategoriesDTO categoriesDTO) throws RuntimeException;
+
     Category findFirstByTitle(String title);
+
     List<CategoriesDTO> findAll();
 
     void deleteById(Long id);

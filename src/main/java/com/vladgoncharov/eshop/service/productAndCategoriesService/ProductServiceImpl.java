@@ -4,15 +4,13 @@ import com.vladgoncharov.eshop.Entity.Category;
 import com.vladgoncharov.eshop.Entity.Product;
 import com.vladgoncharov.eshop.dao.CategoriesRepository;
 import com.vladgoncharov.eshop.dao.ProductRepository;
-import com.vladgoncharov.eshop.dto.CategoriesDTO;
 import com.vladgoncharov.eshop.dto.ProductDTO;
 import com.vladgoncharov.eshop.mapper.ProductMapper;
-import com.vladgoncharov.eshop.service.userService.UserService;
 import com.vladgoncharov.eshop.service.bucketAndOrdersService.BucketService;
+import com.vladgoncharov.eshop.service.userService.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,12 +21,13 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper mapper = ProductMapper.MAPPER;
 
     private final ProductRepository productRepository;
-    private final UserService userService;
+    private final UserRepository userService;
     private final BucketService bucketService;
     private final CategoriesService categoriesService;
     private final CategoriesRepository categoriesRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, UserService userService, BucketService bucketService, CategoriesService categoriesService, CategoriesRepository categoriesRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, UserRepository userService
+            , BucketService bucketService, CategoriesService categoriesService, CategoriesRepository categoriesRepository) {
         this.productRepository = productRepository;
         this.userService = userService;
         this.bucketService = bucketService;
@@ -48,17 +47,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void addToUserBucket(Long productId, String username) {
-        bucketService.addProductInBucket(username, Collections.singletonList(productId));
+        bucketService.addProductInBucket(username, productId);
     }
 
     @Override
-    public Product findFirstByTitle(String title) {
-        return productRepository.findFirstByTitle(title);
-    }
-
-    @Override
-    public Product findFirstById(Long id) {
-        return productRepository.findFirstById(id);
+    public Product getById(Long id) {
+        return productRepository.getById(id);
     }
 
     @Override
@@ -68,9 +62,10 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void save(ProductDTO productDTO) throws RuntimeException {
+
         if (productDTO.getId() == null &&
                 productRepository.findFirstByTitle(productDTO.getTitle()) != null)
-                    throw new RuntimeException("Такой товар уже существует");
+            throw new RuntimeException("Такой товар с название " + productDTO.getTitle() + " уже существует");
         Category category = categoriesService.findFirstByTitle(productDTO.getCategory());
         Product product = Product.builder()
                 .id(productDTO.getId())
@@ -90,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void update(ProductDTO productDTO) {
         List<Category> categories = categoriesRepository.findAll();
-        Product oldProduct = productRepository.findFirstById(productDTO.getId());
+        Product oldProduct = productRepository.getById(productDTO.getId());
         categories = categories.stream()
                 .peek(category -> category.getProduct().remove(oldProduct))
                 .collect(Collectors.toList());

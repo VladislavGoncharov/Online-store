@@ -8,13 +8,13 @@
 <body>
 <div th:insert="~{fragments/menu :: #nav-menu}"></div>
 
-<p th:if="${loginError}" class="error">Wrong user or password</p>
+<p th:if="${loginError}" class="error">Неверный логин или пароль</p>
 <form th:action="@{/auth}" method="post">
   <table border="2">
     <tr>
       <td>
         <label for="usernameField">
-          Name
+          Логин
         </label>
       </td>
       <td>
@@ -24,7 +24,7 @@
     <tr>
       <td>
         <label for="passwordField">
-          Password
+          Пароль
         </label>
       </td>
       <td>
@@ -33,7 +33,7 @@
     </tr>
     <tr>
       <td colspan="2">
-        <button type="submit">log in</button>
+        <button type="submit">Войти</button>
       </td>
     </tr>
 

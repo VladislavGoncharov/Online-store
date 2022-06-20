@@ -22,7 +22,7 @@ public class BucketController {
     }
 
     @GetMapping
-    public String aboutBucket(Model model, Principal principal, HttpServletRequest request) {
+    public String bucketView(Model model, Principal principal, HttpServletRequest request) {
 
         BucketDTO bucketDTO;
         if (principal == null) bucketDTO = bucketService.getBucketByAnonymous(request);
@@ -37,18 +37,18 @@ public class BucketController {
             , Principal principal, HttpServletRequest request) {
 
         BucketDTO bucketDTO;
-        if (principal == null) {
+        if (principal == null) { // удаление товара из корзины в сессии
 
             bucketService.deleteProductInBucket(null, title, request);
             bucketDTO = bucketService.getBucketByAnonymous(request);
-            bucketDTO.getBucketDetails().forEach(System.out::println);
-        } else {
+
+        } else { // удаление товара из корзины в базе данных
+
             bucketService.deleteProductInBucket(principal.getName(), title, null);
             bucketDTO = bucketService.getBucketByUser(principal.getName());
         }
 
         model.addAttribute("bucket", bucketDTO);
-
         return "bucket";
     }
 }
