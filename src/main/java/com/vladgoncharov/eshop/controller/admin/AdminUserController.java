@@ -2,7 +2,7 @@ package com.vladgoncharov.eshop.controller.admin;
 
 import com.vladgoncharov.eshop.Entity.Role;
 import com.vladgoncharov.eshop.dto.UserDTO;
-import com.vladgoncharov.eshop.service.userService.UserRepository;
+import com.vladgoncharov.eshop.service.userService.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +13,9 @@ import java.util.Objects;
 @RequestMapping("/admin")
 public class AdminUserController {
 
-    private final UserRepository userService;
+    private final UserService userService;
 
-    public AdminUserController(UserRepository userService) {
+    public AdminUserController(UserService userService) {
         this.userService = userService;
     }
 

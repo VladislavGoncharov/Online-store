@@ -7,7 +7,7 @@ import com.vladgoncharov.eshop.dto.BucketDetailDTO;
 import com.vladgoncharov.eshop.dto.OrderDTO;
 import com.vladgoncharov.eshop.mapper.OrderMapper;
 import com.vladgoncharov.eshop.service.productAndCategoriesService.ProductService;
-import com.vladgoncharov.eshop.service.userService.UserRepository;
+import com.vladgoncharov.eshop.service.userService.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +22,10 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderRepository orderRepository;
     private final BucketService bucketService;
-    private final UserRepository userRepository;
+    private final UserService userRepository;
     private final ProductService productRepository;
 
-    public OrderServiceImpl(OrderRepository orderRepository, BucketService bucketService, UserRepository userService, ProductService productService) {
+    public OrderServiceImpl(OrderRepository orderRepository, BucketService bucketService, UserService userService, ProductService productService) {
         this.orderRepository = orderRepository;
         this.bucketService = bucketService;
         this.userRepository = userService;

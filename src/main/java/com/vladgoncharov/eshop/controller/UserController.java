@@ -2,7 +2,7 @@ package com.vladgoncharov.eshop.controller;
 
 import com.vladgoncharov.eshop.Entity.User;
 import com.vladgoncharov.eshop.dto.UserDTO;
-import com.vladgoncharov.eshop.service.userService.UserRepository;
+import com.vladgoncharov.eshop.service.userService.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +16,9 @@ import java.security.Principal;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userService;
+    private final UserService userService;
 
-    public UserController(UserRepository userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

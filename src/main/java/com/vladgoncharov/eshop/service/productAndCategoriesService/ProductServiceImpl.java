@@ -7,7 +7,7 @@ import com.vladgoncharov.eshop.dao.ProductRepository;
 import com.vladgoncharov.eshop.dto.ProductDTO;
 import com.vladgoncharov.eshop.mapper.ProductMapper;
 import com.vladgoncharov.eshop.service.bucketAndOrdersService.BucketService;
-import com.vladgoncharov.eshop.service.userService.UserRepository;
+import com.vladgoncharov.eshop.service.userService.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,12 +21,12 @@ public class ProductServiceImpl implements ProductService {
     private final ProductMapper mapper = ProductMapper.MAPPER;
 
     private final ProductRepository productRepository;
-    private final UserRepository userService;
+    private final UserService userService;
     private final BucketService bucketService;
     private final CategoriesService categoriesService;
     private final CategoriesRepository categoriesRepository;
 
-    public ProductServiceImpl(ProductRepository productRepository, UserRepository userService
+    public ProductServiceImpl(ProductRepository productRepository, UserService userService
             , BucketService bucketService, CategoriesService categoriesService, CategoriesRepository categoriesRepository) {
         this.productRepository = productRepository;
         this.userService = userService;

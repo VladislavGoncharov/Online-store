@@ -7,7 +7,7 @@ import com.vladgoncharov.eshop.dto.BucketDTO;
 import com.vladgoncharov.eshop.dto.OrderDTO;
 import com.vladgoncharov.eshop.service.bucketAndOrdersService.BucketService;
 import com.vladgoncharov.eshop.service.bucketAndOrdersService.OrderService;
-import com.vladgoncharov.eshop.service.userService.UserRepository;
+import com.vladgoncharov.eshop.service.userService.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,9 +21,9 @@ public class OrderController {
 
     private final OrderService orderService;
     private final BucketService bucketService;
-    private final UserRepository userService;
+    private final UserService userService;
 
-    public OrderController(OrderService orderService, BucketService bucketService, UserRepository userService) {
+    public OrderController(OrderService orderService, BucketService bucketService, UserService userService) {
         this.orderService = orderService;
         this.bucketService = bucketService;
         this.userService = userService;

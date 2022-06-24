@@ -7,7 +7,7 @@ import com.vladgoncharov.eshop.dto.ProductDTO;
 import com.vladgoncharov.eshop.dto.UserDTO;
 import com.vladgoncharov.eshop.service.bucketAndOrdersService.BucketService;
 import com.vladgoncharov.eshop.service.productAndCategoriesService.ProductService;
-import com.vladgoncharov.eshop.service.userService.UserRepository;
+import com.vladgoncharov.eshop.service.userService.UserService;
 import com.vladgoncharov.eshop.utils.BucketUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,11 +23,11 @@ import java.util.*;
 @Controller
 public class MainController {
 
-    private final UserRepository userService;
+    private final UserService userService;
     private final BucketService bucketService;
     private final ProductService productService;
 
-    public MainController(UserRepository userService, BucketService bucketService, ProductService productService) {
+    public MainController(UserService userService, BucketService bucketService, ProductService productService) {
         this.userService = userService;
         this.bucketService = bucketService;
         this.productService = productService;

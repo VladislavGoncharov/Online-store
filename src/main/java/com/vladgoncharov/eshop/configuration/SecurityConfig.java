@@ -1,7 +1,7 @@
 package com.vladgoncharov.eshop.configuration;
 
 import com.vladgoncharov.eshop.Entity.Role;
-import com.vladgoncharov.eshop.service.userService.UserRepository;
+import com.vladgoncharov.eshop.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,10 +23,10 @@ import javax.persistence.Basic;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserRepository userService;
+    private UserService userService;
 
     @Autowired
-    public void setUserService(UserRepository userService) {
+    public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
