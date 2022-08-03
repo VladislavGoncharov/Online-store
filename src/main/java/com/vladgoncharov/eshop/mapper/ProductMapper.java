@@ -1,6 +1,6 @@
 package com.vladgoncharov.eshop.mapper;
 
-import com.vladgoncharov.eshop.Entity.Product;
+import com.vladgoncharov.eshop.entity.Product;
 import com.vladgoncharov.eshop.dto.ProductDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -19,6 +19,7 @@ public interface ProductMapper {
                 .title(product.getTitle())
                 .price(product.getPrice())
                 .category(product.getCategory() == null ? "" : product.getCategory().getTitle())
+                .img(product.getImg())
                 .build();
     }
 
@@ -28,6 +29,7 @@ public interface ProductMapper {
                         .title(product.getTitle())
                         .price(product.getPrice())
                         .category(product.getCategory() == null ? "" : product.getCategory().getTitle())
+                        .img(product.getImg())
                         .build())
                 .collect(Collectors.toList());
     }

@@ -1,7 +1,7 @@
 package com.vladgoncharov.eshop.service.userService;
 
-import com.vladgoncharov.eshop.Entity.Role;
-import com.vladgoncharov.eshop.Entity.User;
+import com.vladgoncharov.eshop.entity.Role;
+import com.vladgoncharov.eshop.entity.User;
 import com.vladgoncharov.eshop.dto.UserDTO;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +20,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final com.vladgoncharov.eshop.dao.UserRepository userRepository;
-
     private final PasswordEncoder passwordEncoder;
 
     public UserServiceImpl(com.vladgoncharov.eshop.dao.UserRepository userRepository, PasswordEncoder passwordEncoder) {

@@ -1,7 +1,7 @@
 package com.vladgoncharov.eshop.service.productAndCategoriesService;
 
-import com.vladgoncharov.eshop.Entity.Category;
-import com.vladgoncharov.eshop.Entity.Product;
+import com.vladgoncharov.eshop.entity.Category;
+import com.vladgoncharov.eshop.entity.Product;
 import com.vladgoncharov.eshop.dao.CategoriesRepository;
 import com.vladgoncharov.eshop.dao.ProductRepository;
 import com.vladgoncharov.eshop.dto.ProductDTO;

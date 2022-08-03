@@ -1,6 +1,6 @@
 package com.vladgoncharov.eshop.configuration;
 
-import com.vladgoncharov.eshop.Entity.Role;
+import com.vladgoncharov.eshop.entity.Role;
 import com.vladgoncharov.eshop.service.userService.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

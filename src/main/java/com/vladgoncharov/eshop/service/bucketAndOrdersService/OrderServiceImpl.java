@@ -1,6 +1,6 @@
 package com.vladgoncharov.eshop.service.bucketAndOrdersService;
 
-import com.vladgoncharov.eshop.Entity.*;
+import com.vladgoncharov.eshop.entity.*;
 import com.vladgoncharov.eshop.dao.OrderRepository;
 import com.vladgoncharov.eshop.dto.BucketDTO;
 import com.vladgoncharov.eshop.dto.BucketDetailDTO;

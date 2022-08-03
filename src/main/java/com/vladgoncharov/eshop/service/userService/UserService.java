@@ -1,7 +1,7 @@
 package com.vladgoncharov.eshop.service.userService;
 
-import com.vladgoncharov.eshop.Entity.Role;
-import com.vladgoncharov.eshop.Entity.User;
+import com.vladgoncharov.eshop.entity.Role;
+import com.vladgoncharov.eshop.entity.User;
 import com.vladgoncharov.eshop.dto.UserDTO;
 import org.springframework.security.core.userdetails.UserDetailsService;
 

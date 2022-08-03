@@ -1,4 +1,4 @@
-package com.vladgoncharov.eshop.Entity;
+package com.vladgoncharov.eshop.entity;
 
 import lombok.*;
 
@@ -24,4 +24,5 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+    private String img;
 }

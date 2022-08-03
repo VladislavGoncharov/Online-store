@@ -1,6 +1,6 @@
 package com.vladgoncharov.eshop.dto;
 
-import com.vladgoncharov.eshop.Entity.OrderStatus;
+import com.vladgoncharov.eshop.entity.OrderStatus;
 import lombok.*;
 
 import java.util.Arrays;

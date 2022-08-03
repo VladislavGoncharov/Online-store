@@ -1,6 +1,6 @@
 package com.vladgoncharov.eshop.service.productAndCategoriesService;
 
-import com.vladgoncharov.eshop.Entity.Category;
+import com.vladgoncharov.eshop.entity.Category;
 import com.vladgoncharov.eshop.dto.CategoriesDTO;
 
 import java.util.List;

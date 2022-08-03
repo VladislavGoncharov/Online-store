@@ -1,7 +1,7 @@
 package com.vladgoncharov.eshop.mapper;
 
-import com.vladgoncharov.eshop.Entity.Order;
-import com.vladgoncharov.eshop.Entity.OrderDetails;
+import com.vladgoncharov.eshop.entity.Order;
+import com.vladgoncharov.eshop.entity.OrderDetails;
 import com.vladgoncharov.eshop.dto.OrderDTO;
 import com.vladgoncharov.eshop.dto.OrderDetailsDTO;
 import org.mapstruct.Mapper;

@@ -1,7 +1,7 @@
 package com.vladgoncharov.eshop.controller;
 
-import com.vladgoncharov.eshop.Entity.OrderStatus;
-import com.vladgoncharov.eshop.Entity.User;
+import com.vladgoncharov.eshop.entity.OrderStatus;
+import com.vladgoncharov.eshop.entity.User;
 import com.vladgoncharov.eshop.dto.AddressForOrder;
 import com.vladgoncharov.eshop.dto.BucketDTO;
 import com.vladgoncharov.eshop.dto.OrderDTO;

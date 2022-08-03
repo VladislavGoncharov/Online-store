@@ -1,9 +1,8 @@
 package com.vladgoncharov.eshop.controller;
 
-import com.vladgoncharov.eshop.Entity.Product;
+import com.vladgoncharov.eshop.entity.Product;
 import com.vladgoncharov.eshop.dto.BucketDTO;
 import com.vladgoncharov.eshop.dto.BucketDetailDTO;
-import com.vladgoncharov.eshop.dto.OrderStatusDTO;
 import com.vladgoncharov.eshop.service.productAndCategoriesService.ProductService;
 import com.vladgoncharov.eshop.utils.BucketUtil;
 import org.springframework.stereotype.Controller;

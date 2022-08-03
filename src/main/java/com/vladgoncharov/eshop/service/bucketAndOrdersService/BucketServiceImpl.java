@@ -1,8 +1,8 @@
 package com.vladgoncharov.eshop.service.bucketAndOrdersService;
 
-import com.vladgoncharov.eshop.Entity.Bucket;
-import com.vladgoncharov.eshop.Entity.Product;
-import com.vladgoncharov.eshop.Entity.User;
+import com.vladgoncharov.eshop.entity.Bucket;
+import com.vladgoncharov.eshop.entity.Product;
+import com.vladgoncharov.eshop.entity.User;
 import com.vladgoncharov.eshop.dao.BucketRepository;
 import com.vladgoncharov.eshop.dao.ProductRepository;
 import com.vladgoncharov.eshop.dao.UserRepository;
@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional

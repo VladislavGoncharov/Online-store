@@ -1,6 +1,6 @@
 package com.vladgoncharov.eshop.controller;
 
-import com.vladgoncharov.eshop.Entity.Role;
+import com.vladgoncharov.eshop.entity.Role;
 import com.vladgoncharov.eshop.dto.BucketDTO;
 import com.vladgoncharov.eshop.dto.BucketDetailDTO;
 import com.vladgoncharov.eshop.dto.ProductDTO;

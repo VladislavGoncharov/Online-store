@@ -1,7 +1,7 @@
 package com.vladgoncharov.eshop.dao;
 
-import com.vladgoncharov.eshop.Entity.Order;
-import com.vladgoncharov.eshop.Entity.User;
+import com.vladgoncharov.eshop.entity.Order;
+import com.vladgoncharov.eshop.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

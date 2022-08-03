@@ -1,7 +1,7 @@
 package com.vladgoncharov.eshop.service.bucketAndOrdersService;
 
-import com.vladgoncharov.eshop.Entity.Order;
-import com.vladgoncharov.eshop.Entity.OrderStatus;
+import com.vladgoncharov.eshop.entity.Order;
+import com.vladgoncharov.eshop.entity.OrderStatus;
 import com.vladgoncharov.eshop.dto.OrderDTO;
 
 import java.util.List;

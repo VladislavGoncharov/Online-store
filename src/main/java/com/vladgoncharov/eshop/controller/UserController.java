@@ -1,6 +1,6 @@
 package com.vladgoncharov.eshop.controller;
 
-import com.vladgoncharov.eshop.Entity.User;
+import com.vladgoncharov.eshop.entity.User;
 import com.vladgoncharov.eshop.dto.UserDTO;
 import com.vladgoncharov.eshop.service.userService.UserService;
 import org.springframework.stereotype.Controller;
